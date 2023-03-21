@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
-    <title>BeautifulSoap и aoigram. Как можно использовать в своих целях?</title>
+    <title>Как создать парсер?</title>
     <link rel="stylesheet" href="CSS.css">
     <!-- Yandex.RTB -->
 <script>window.yaContextCb=window.yaContextCb||[]</script>
@@ -14,7 +15,7 @@
    } 
   </style>
   <body  style="
-    height: 4300px;
+    height: 4700px;
 ">
   <!-- Yandex.RTB R-A-2255536-2 -->
 <div id="yandex_rtb_R-A-2255536-2"></div>
@@ -67,8 +68,9 @@
 			<li>В 2 части мы этот парсер внедрим в Telegram бота.
 		</ul>
         <h3>Часть 1</h3>
-		<p>Дл начала определимся с тем, что будем парсить. Я подобрал отличный сайт который мог бы отлично подойти под парсинг. И так как я студент колледжа которому принадлежит этот сайт, мне значительно легче и удобнее будет автоматизировать сбор расписания на неделю.</p>
-		<img src="https://psv4.userapi.com/c237031/u373576191/docs/d7/89fe4b9063d1/2023-03-19_13-13-04.png?extra=srEO2iCrR9wh49myMriHDEzcm5M9dVQz4m9Ed86kt82iPKq5qbVFfLBtu9I24o-GeI_OBy-dOzpeSDNuGNog5rgXHd4zGP0v-EsGLw7T3iEx27g78NJsnkFEQkbirlGYtZagAr2odDQgwcYELpvY1qeiIg" width="900" height="450" style="
+		<p>Для начала определимся с тем, что будем парсить. Я подобрал отличный сайт который мог бы отлично подойти под парсинг. И так как я студент колледжа которому принадлежит этот сайт, мне значительно легче и удобнее будет автоматизировать сбор расписания на неделю.</p>
+		
+		<img src="https://ic.wampi.ru/2023/03/21/2023-03-19_13-13-04.png" width="1000" height="550" style="
     margin-left: 20px;">
 	<p>Так что... ПОЕХАЛИ! Мы будем ипользовать две библиотеки: BeautifulSoup и requests</p>
 	<p>Кратко о библиотеках:</p>
@@ -77,23 +79,27 @@
 		<li>Requests - это библиотека, которая облегчает выполнение HTTP-запросов и управление сеансами. Это означает, что requests позволяет вашему коду получать страницы, изображения и другой контент с Интернета.
 		<li>BeautifulSoup - это библиотека для парсинга HTML-кода. Она позволяет коду извлекать конкретные элементы HTML-разметки из веб-страницы и далее обрабатывать их. Пример использования BeautifulSoup - извлечение текста, ссылок и других элементов из HTML-страницы.
 	</ul>
-		<img src="https://psv4.userapi.com/c235031/u373576191/docs/d26/578195eb528c/2023-03-19_12-49-02.png?extra=z5AnUQVW_nCvce6g4DF_MGRSA6TT-B9egtJo2MPm6KRGPsZyAg65zPzlLexnWCww4YUMsfQCHG3HvsAZ1OPQr-Ax_2lJkiOK-_ReF-I8O_7FlcUvoCVbQ8K4SJCH0DB-uvErEBf4__ulzPWUeAceBG86Yw" width="890" height="270" style="
+	<p>Мы импортируем библиотеки которые на понадобятся для парсинга.</p>
+		<img src="https://ie.wampi.ru/2023/03/21/2023-03-21_21-33-46.png" width="790" height="80" style="
     margin-left: 20px;">
-	<p>После того как мы получили все файлы мы можем начать их фильтровать</p>
-		<img src="https://psv4.userapi.com/c235031/u373576191/docs/d45/963d68277c3c/2023-03-19_12-49-59.png?extra=2rPaSScFSlN6R2SjE5PoevAVf7vllS0i5OrO0wqDUgpGyjo0SHZJQhbn2h1yDFDjPai88_Npoo60xc06tEkVbjdiRQIMEH4-mxETomdJ0QUZ7TwKCo-XXVzvSyJqMFH73spnzgj-GU8kaVKzXVWx0XgMiw" width="890" height="270" style="margin-left: 20px;">
-<p>Самое главное брать нужные нам файлы</p>
-		<img src="https://psv4.userapi.com/c235031/u373576191/docs/d43/5dad2d60e5b1/2023-03-19_12-50-34.png?extra=Hn7gJk0bVBAUH5ZoKAbBwHW8Lc8p22psljyj7YKfuKNEb336TH0Z9W7osEA3OtGuxVqO9j1WQ17FkpWsf__BiJ8MQD6UGEVkvlYdDjrJAV_GjWYFr7Gljvppk85eb4dsfSa0WbO1cTRtVU_4AqtkZk-VGA" width="660" height="180" style="margin-left: 20px;">
+	
+	<p></p>
+	<p>Теперь наша задача отправить get запрос на сайт и зайти в классы в которых мы можем найти нужные нам файлы.</p>
+		<img src="https://im.wampi.ru/2023/03/21/2023-03-21_21-41-52.png" width="790" height="280" style="margin-left: 20px;">
+<p>Теперь мы фильтруем файлы и если файлы с текстовым описанием не "Расписание 1 курс", то мы их пропускаем. А если файл нам подходит, то мы его сохраняем в качестве ссылки на сам файл. И уже в будущем мы сохраняем файл.</p>
+		<img src="https://ie.wampi.ru/2023/03/21/2023-03-21_21-46-37.png" width="760" height="440" style="margin-left: 20px;">
 	<p>Вот первая часть подходит к концу. Давайте посмотрим как можно добавить парсер в бота</p>
 	<h3>Часть 2</h3>
-<p>Импортируются необходимые модули, такие как Bot, Dispatcher, types (из aiogram), logging, requests, BeautifulSoup и os. 
-Далее определяется токен для бота, создается ссылка на бота и его диспетчер (Dispatcher). </p>
-		<img src="https://psv4.userapi.com/c237131/u373576191/docs/d32/2e0cb0f78a9f/2023-03-19_13-57-24.png?extra=ddR2W6Tm4kk7lnufqEP4FcfeUlRdhD9D8bvi0IH52yOJYqC-p_jCHDu4rEvV-S7bIo9rOadcDHm90azBL_-FS_z46JpV_gs03HUt94PocHcJKFK3fO29Ntx4yioMKiS60nD2fwyu5wP91YXJU6lGwBsBHw" width="890" height="330" style="margin-left: 20px;">
+<p>Импортируются необходимые модули, такие как Bot, Dispatcher, types (из aiogram), logging, requests, BeautifulSoup и os. </p>
+		<img src="https://ie.wampi.ru/2023/03/21/2023-03-21_22-17-09.png" width="700" height="200" style="margin-left: 20px;">
+<p>Далее определяется токен для бота, создается ссылка на бота и его диспетчер (Dispatcher). </p>
+		<img src="https://im.wampi.ru/2023/03/21/2023-03-21_22-22-21.png" width="600" height="150" style="margin-left: 20px;">
 <p>Далее определяется функция "sendCollgeMess()", которая получает расписание для колледжа с помощью парсинга веб-страницы с помощью requests и BeautifulSoup. Затем проверяется, содержит ли файл "Расписание учебных занятий 1 курс с", и если это так, получается ссылка на файл и он в будущем должен будет загружается и сохранятся на диск.</p>
-		<img src="https://psv4.userapi.com/c237131/u373576191/docs/d17/1628aded0bb3/2023-03-19_14-21-58.png?extra=dJa1S6eCF89h4NQU8iOptes8eDkifGhGejlUZwIb7agYOUIQH-HNj3q3BS5Y4D88yfNwL7kSvWsXf9FCGI7HNgeKLSC3AXzgJ9eOUk54JOICF5flQrU_a1Ckp_rIUfI5evK5SLOgJDSyF86Wdkl12_mg4Q" width="800" height="330" style="margin-left: 20px;">
+		<img src="https://im.wampi.ru/2023/03/21/2023-03-19_14-21-58-1.png" width="800" height="430" style="margin-left: 20px;">
 		<p>Затем определяются обработчики команд "/command1", "/command2" и "/command3". "/command1" отправляет URL-адрес файла расписания в ответ на запрос пользователя. "/command2" отправляет сам файл в ответ на запрос пользователя, а затем удаляет его с диска. "/command3" отправляет сообщение с ссылкой на чат на Telegram.</p>
-		<img src="https://psv4.userapi.com/c237131/u373576191/docs/d25/6c0729b8f43b/2023-03-19_14-25-21.png?extra=PzT5TMtfHc2Fn-lgTf7cMUyOw7slHK1vNjn82kBIUt8sCrMWl6s5oosOTl5hSImRUVymR8SbczFKeLWlmEtqe-VMo1rZIltaP9qcmt1j_Iwi2RQTmsLK4xC2WlhJfOSiSJSdGl6b5yDgp1NAcPH5015qiQ" width="800" height="400" style="margin-left: 20px;">
+		<img src="https://ic.wampi.ru/2023/03/21/2023-03-19_14-25-21-1.png" width="800" height="540" style="margin-left: 20px;">
 <p>Далее определяется основное тело кода с функцией "executor.start_polling()". Эта функция запускает бота, который начинает слушать сообщения от пользователей и отправлять ответы в соответствии с определенными командами.</p>
-		<img src="https://psv4.userapi.com/c237131/u373576191/docs/d49/aeceb152ff8c/2023-03-19_14-25-59.png?extra=WokN0Y3-dpVbBNWx4Rcx2RZpTGlE-iL2mMBE8kcD3T9Z_KlA117bnFcLN9PPM6n9JRakm2G4zdveipvkAcWYue_X70JuIuiK1Tv_myOEona-EaJu6Md4ioRwTDgChoQA7Wn4L_BsKakduZJT9UnHwhGxkg" width="780" height="150" style="margin-left: 20px;">
+		<img src="https://ic.wampi.ru/2023/03/21/2023-03-21_22-32-31.png" width="580" height="110" style="margin-left: 20px;">
 <p>Ну чтож на этом все. Надеюсь вы смогли подчеркнуть, что то полезное для себя!</p>
       </article>
       <!-- Дополнительный контент также может быть вложен в основной контент -->
