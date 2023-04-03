@@ -80,26 +80,98 @@
 		<li>BeautifulSoup - это библиотека для парсинга HTML-кода. Она позволяет коду извлекать конкретные элементы HTML-разметки из веб-страницы и далее обрабатывать их. Пример использования BeautifulSoup - извлечение текста, ссылок и других элементов из HTML-страницы.
 	</ul>
 	<p>Мы импортируем библиотеки которые на понадобятся для парсинга.</p>
-		<img src="<img src="https://ic.wampi.ru/2023/04/03/imageb7f0e7fd5de9d559.png" width="750" height="80" style="
-    margin-left: 20px;">
+		
+	      
+	      <pre class="hljs" style="display: block; overflow-x: auto; padding: 0.5em; background: rgb(34, 34, 34); color: rgb(170, 170, 170);"><span class="hljs-keyword" style="color: rgb(102, 68, 170);">import</span> requests
+from bs4 <span class="hljs-keyword" style="color: rgb(102, 68, 170);">import</span> BeautifulSoup <span class="hljs-keyword" style="color: rgb(102, 68, 170);">as</span> BS</pre>
 	
+	      
 	<p></p>
 	<p>Теперь наша задача отправить get запрос на сайт и зайти в классы в которых мы можем найти нужные нам файлы.</p>
-		<img src="https://ray.so/#code=cmVzcCA9IHJlcXVlc3RzLmdldCgiaHR0cHM6Ly9jb2xsZWdldHNhcml0c3luby5tc2tvYnIucnUvdWNoYXNoaW1zeWEvcmFzcGlzYW5pZS1rYW5pa3VseSIpCmJzID0gQlMocmVzcC50ZXh0LCAiaHRtbC5wYXJzZXIiKQpjbCA9IGJzLmZpbmQoImRpdiIsIGNsYXNzXyA9ICJmb2xkZXJzIikKY2wxID0gY2wuZmluZF9hbGwoImxpIiwgY2xhc3NfID0gInBkZiIp&theme=midnight&background=true&darkMode=true&language=python&width=908" width="790" height="280" style="margin-left: 20px;">
-<p>Теперь мы фильтруем файлы и если файлы с текстовым описанием не "Расписание 1 курс", то мы их пропускаем. А если файл нам подходит, то мы его сохраняем в качестве ссылки на сам файл. И уже в будущем мы сохраняем файл.</p>
-		<img src="https://ray.so/#code=IyDQptC40LrQuyDQv9C-INC90LDQudC00LXQvdC90YvQvCDRjdC70LXQvNC10L3RgtCw0LwgbGkg0YEg0LrQu9Cw0YHRgdC-0LwgcGRmCmZvciBpIGluIGNsMToKICAgICMg0J_RgNC-0LLQtdGA0Y_QtdC8LCDRgdC-0LTQtdGA0LbQuNGCINC70Lgg0YLQtdC60YHRgiDRjdC70LXQvNC10L3RgtCwINGB0YLRgNC-0LrRgyAi0KDQsNGB0L_QuNGB0LDQvdC40LUg0YPRh9C10LHQvdGL0YUg0LfQsNC90Y_RgtC40LkgMSDQutGD0YDRgSDRgSIKICAgIGlmICLQoNCw0YHQv9C40YHQsNC90LjQtSDRg9GH0LXQsdC90YvRhSDQt9Cw0L3Rj9GC0LjQuSAxINC60YPRgNGBINGBIiBpbiBpLnRleHQ6CiAgICAgICAgIyDQn9C-0LvRg9GH0LDQtdC8INGB0YHRi9C70LrRgyDQvdCwIFBERiDRhNCw0LnQuyDQuNC3INCw0YLRgNC40LHRg9GC0LAgaHJlZiDRgdGB0YvQu9C60LgKICAgICAgICBwZGZfdXJsID0gImh0dHBzOi8vY29sbGVnZXRzYXJpdHN5bm8ubXNrb2JyLnJ1IiArIGkuYVsnaHJlZiddCiAgICAgICAgIyDQlNC-0LHQsNCy0LvRj9C10Lwg0YHRgdGL0LvQutGDINCyINGB0L_QuNGB0L7QuiBsc3QKICAgICAgICBsc3QuYXBwZW5kKHBkZl91cmwpCiAjINCS0YvQv9C-0LvQvdGP0LXQvCDQt9Cw0L_RgNC-0YEgR0VUINC_0L4g0YHRgdGL0LvQutC1INC90LAgUERGINGE0LDQudC7INC4INC30LDQv9C40YHRi9Cy0LDQtdC8INC_0L7Qu9GD0YfQtdC90L3Ri9C1INC00LDQvdC90YvQtSDQsiDRhNCw0LnQuyDQvdCwINC00LjRgdC6CnJlc3BvbnNlID0gcmVxdWVzdHMuZ2V0KHBkZl91cmwpCmZpbGVuYW1lID0gcGRmX3VybC5zcGxpdCgnLycpWy0xXQp3aXRoIG9wZW4oZmlsZW5hbWUsICd3YicpIGFzIGY6CiAgICBmLndyaXRlKHJlc3BvbnNlLmNvbnRlbnQpCiAgICBlbHNlOgogICAgICAgIGNvbnRpbnVl&theme=midnight&background=true&darkMode=true&language=python&width=908&title=python-parser" width="760" height="440" style="margin-left: 20px;">
+		<pre class="hljs" style="display: block; overflow-x: auto; padding: 0.5em; background: rgb(34, 34, 34); color: rgb(170, 170, 170);"><span class="hljs-attr">resp</span> = requests.get(<span class="hljs-string" style="color: rgb(255, 204, 51);">"https://collegetsaritsyno.mskobr.ru/uchashimsya/raspisanie-kanikuly"</span>)
+<span class="hljs-attr">bs</span> = BS(resp.text, <span class="hljs-string" style="color: rgb(255, 204, 51);">"html.parser"</span>)
+<span class="hljs-attr">cl</span> = bs.find(<span class="hljs-string" style="color: rgb(255, 204, 51);">"div"</span>, class_ = <span class="hljs-string" style="color: rgb(255, 204, 51);">"folders"</span>)
+<span class="hljs-attr">cl1</span> = cl.find_all(<span class="hljs-string" style="color: rgb(255, 204, 51);">"li"</span>, class_ = <span class="hljs-string" style="color: rgb(255, 204, 51);">"pdf"</span>)</pre>
+
+	      <p>Теперь мы фильтруем файлы и если файлы с текстовым описанием не "Расписание 1 курс", то мы их пропускаем. А если файл нам подходит, то мы его сохраняем в качестве ссылки на сам файл. И уже в будущем мы сохраняем файл.</p>
+		<pre class="hljs" style="display: block; overflow-x: auto; padding: 0.5em; background: rgb(34, 34, 34); color: rgb(170, 170, 170);"><span class="hljs-keyword" style="color: rgb(102, 68, 170);">for</span> i <span class="hljs-keyword" style="color: rgb(102, 68, 170);">in</span> cl1:
+    <span class="hljs-comment" style="color: rgb(68, 68, 68);"># Проверяем, содержит ли текст элемента строку "Расписание учебных занятий 1 курс с"</span>
+    <span class="hljs-keyword" style="color: rgb(102, 68, 170);">if</span> <span class="hljs-string" style="color: rgb(255, 204, 51);">"Расписание учебных занятий 1 курс с"</span> <span class="hljs-keyword" style="color: rgb(102, 68, 170);">in</span> i.<span class="hljs-keyword" style="color: rgb(102, 68, 170);">text</span>:
+        <span class="hljs-comment" style="color: rgb(68, 68, 68);"># Получаем ссылку на PDF файл из атрибута href ссылки</span>
+        pdf_url = <span class="hljs-string" style="color: rgb(255, 204, 51);">"https://collegetsaritsyno.mskobr.ru"</span> + i.<span class="hljs-keyword" style="color: rgb(102, 68, 170);">a</span>[<span class="hljs-string" style="color: rgb(255, 204, 51);">'href'</span>]
+        <span class="hljs-comment" style="color: rgb(68, 68, 68);"># Добавляем ссылку в список lst</span>
+        lst.append(pdf_url)
+ <span class="hljs-comment" style="color: rgb(68, 68, 68);"># Выполняем запрос GET по ссылке на PDF файл и записываем полученные данные в файл на диск</span>
+response = requests.<span class="hljs-built_in" style="color: rgb(50, 170, 238);">get</span>(pdf_url)
+filename = pdf_url.<span class="hljs-built_in" style="color: rgb(50, 170, 238);">split</span>(<span class="hljs-string" style="color: rgb(255, 204, 51);">'/'</span>)[<span class="hljs-number" style="color: rgb(0, 204, 102);">-1</span>]
+<span class="hljs-keyword" style="color: rgb(102, 68, 170);">with</span> <span class="hljs-built_in" style="color: rgb(50, 170, 238);">open</span>(filename, <span class="hljs-string" style="color: rgb(255, 204, 51);">'wb'</span>) <span class="hljs-keyword" style="color: rgb(102, 68, 170);">as</span> f:
+    f.<span class="hljs-built_in" style="color: rgb(50, 170, 238);">write</span>(response.content)
+    <span class="hljs-keyword" style="color: rgb(102, 68, 170);">else</span>:
+        continue</pre>
 	<p>Вот первая часть подходит к концу. Давайте посмотрим как можно добавить парсер в бота</p>
 	<h3>Часть 2</h3>
 <p>Импортируются необходимые модули, такие как Bot, Dispatcher, types (из aiogram), logging, requests, BeautifulSoup и os. </p>
-		<img src="https://ray.so/#code=ZnJvbSBhaW9ncmFtIGltcG9ydCBCb3QsIERpc3BhdGNoZXIsIGV4ZWN1dG9yLCB0eXBlcwppbXBvcnQgbG9nZ2luZwppbXBvcnQgcmVxdWVzdHMKZnJvbSBiczQgaW1wb3J0IEJlYXV0aWZ1bFNvdXAgYXMgQlMKZnJvbSBhaW9ncmFtIGltcG9ydCB0eXBlcwppbXBvcnQgb3MKZnJvbSBhaW9ncmFtLnR5cGVzIGltcG9ydCBNZXNzYWdlLCBNZWRpYUdyb3VwLCBJbnB1dE1lZGlhRG9jdW1lbnQKaW1wb3J0IHJhbmRvbQ&theme=midnight&background=true&darkMode=true&language=python&width=908&title=python-parser" width="700" height="200" style="margin-left: 20px;">
+		<pre class="hljs" style="display: block; overflow-x: auto; padding: 0.5em; background: rgb(34, 34, 34); color: rgb(170, 170, 170);">from aiogram <span class="hljs-keyword" style="color: rgb(102, 68, 170);">import</span> Bot, Dispatcher, executor, types
+<span class="hljs-keyword" style="color: rgb(102, 68, 170);">import</span> logging
+<span class="hljs-keyword" style="color: rgb(102, 68, 170);">import</span> requests
+from bs4 <span class="hljs-keyword" style="color: rgb(102, 68, 170);">import</span> BeautifulSoup <span class="hljs-keyword" style="color: rgb(102, 68, 170);">as</span> BS
+from aiogram <span class="hljs-keyword" style="color: rgb(102, 68, 170);">import</span> types
+<span class="hljs-keyword" style="color: rgb(102, 68, 170);">import</span> os
+from aiogram.types <span class="hljs-keyword" style="color: rgb(102, 68, 170);">import</span> Message, MediaGroup, InputMediaDocument
+<span class="hljs-keyword" style="color: rgb(102, 68, 170);">import</span> random</pre>
 <p>Далее определяется токен для бота, создается ссылка на бота и его диспетчер (Dispatcher). </p>
-		<img src="https://ray.so/#code=bG9nZ2luZy5iYXNpY0NvbmZpZyhsZXZlbD1sb2dnaW5nLklORk8pClRPS0VOID0gIjYwNjEzMjgyMDQ6QUFHZlZPR2JuZjgxbkdUWlhfQ0RsVlR0TEk3dzV3dFFrNEUiCmJvdCA9IEJvdCh0b2tlbj1UT0tFTikKZHAgPSBEaXNwYXRjaGVyKGJvdCk&theme=midnight&background=true&darkMode=true&language=python&width=908&title=python-parser" width="600" height="150" style="margin-left: 20px;">
+		<pre class="hljs" style="display: block; overflow-x: auto; padding: 0.5em; background: rgb(34, 34, 34); color: rgb(170, 170, 170);">logging.basicConfig(<span class="hljs-attr">level=logging.INFO)</span>
+<span class="hljs-attr">TOKEN</span> = <span class="hljs-string" style="color: rgb(255, 204, 51);">"Token"</span>
+<span class="hljs-attr">bot</span> = Bot(<span class="hljs-attr">token=TOKEN)</span>
+<span class="hljs-attr">dp</span> = Dispatcher(bot)</pre>
 <p>Далее определяется функция "send_First_Course", которая получает расписание для колледжа с помощью парсинга веб-страницы с помощью requests и BeautifulSoup. Затем проверяется, содержит ли файл "Расписание учебных занятий 1 курс с", и если это так, получается ссылка на файл и он в будущем должен будет загружается и сохранятся на диск.</p>
-		<img src="https://ray.so/#code=ZGVmIHNlbmRfRmlyc3RfQ291cnNlKCk6CiAgICByZXNwID0gcmVxdWVzdHMuZ2V0KCJodHRwczovL2NvbGxlZ2V0c2FyaXRzeW5vLm1za29ici5ydS91Y2hhc2hpbXN5YS9yYXNwaXNhbmllLWthbmlrdWx5IikKICAgIGJzID0gQlMocmVzcC50ZXh0LCAiaHRtbC5wYXJzZXIiKQogICAgY2wgPSBicy5maW5kKCJkaXYiLCBjbGFzc18gPSAiZm9sZGVycyIpCiAgICBjbDEgPSBjbC5maW5kX2FsbCgibGkiLCBjbGFzc18gPSAicGRmIikKICAgIGZvciBpIGluIGNsMToKICAgICAgICBpZiAi0KDQsNGB0L_QuNGB0LDQvdC40LUg0YPRh9C10LHQvdGL0YUg0LfQsNC90Y_RgtC40LkgMSDQutGD0YDRgSDRgSIgaW4gaS50ZXh0OgogICAgICAgICAgICBwZGZfdXJsID0gImh0dHBzOi8vY29sbGVnZXRzYXJpdHN5bm8ubXNrb2JyLnJ1IiArIGkuYVsnaHJlZiddCiAgICAgICAgICAgICAjINCe0L_RgNC10LTQtdC70Y_QtdC8INGE0YPQvdC60YbQuNGOINC-0YLQv9GA0LDQstC60Lgg0YLQtdC60YHRgtC-0LLRi9GFINGB0L7QvtCx0YnQtdC90LjQuSDQsiDRh9Cw0YIgVGVsZWdyYW0KICAgICAgICBhc3luYyBkZWYgc2VuZF90ZXh0KGNoYXRfaWQ6IGludCwgbWVzc2FnZV90ZXh0OiBzdHIpOgogICAgICAgICAgICBhd2FpdCBib3Quc2VuZF9tZXNzYWdlKGNoYXRfaWQ9Y2hhdF9pZCwgdGV4dD1tZXNzYWdlX3RleHQpCiAgICAgICAgIyDQktGL0L_QvtC70L3Rj9C10Lwg0LfQsNC_0YDQvtGBIEdFVCDQv9C-INGB0YHRi9C70LrQtSDQvdCwIFBERiDRhNCw0LnQuyDQuCDQt9Cw0L_QuNGB0YvQstCw0LXQvCDQv9C-0LvRg9GH0LXQvdC90YvQtSDQtNCw0L3QvdGL0LUg0LIg0YTQsNC50Lsg0L3QsCDQtNC40YHQugogICAgICAgIHJlc3BvbnNlID0gcmVxdWVzdHMuZ2V0KHBkZl91cmwpCiAgICAgICAgZmlsZW5hbWUgPSBwZGZfdXJsLnNwbGl0KCcvJylbLTFdCgogICAgICAgIHdpdGggb3BlbihmaWxlbmFtZSwgJ3diJykgYXMgZjoKICAgICAgICAgICAgZi53cml0ZShyZXNwb25zZS5jb250ZW50KQogICAgZWxzZToKICAgICAgICBjb250aW51ZSAgICAgICAgICAgIA&theme=midnight&background=true&darkMode=true&language=python&width=908&title=python-parser&padding=32" width="800" height="430" style="margin-left: 20px;">
+		<pre class="hljs" style="display: block; overflow-x: auto; padding: 0.5em; background: rgb(34, 34, 34); color: rgb(170, 170, 170);"><span class="hljs-function"><span class="hljs-keyword" style="color: rgb(102, 68, 170);">def</span> <span class="hljs-title" style="color: rgb(187, 17, 102);">send_First_Course</span><span class="hljs-params">()</span>:</span>
+    resp = requests.get(<span class="hljs-string" style="color: rgb(255, 204, 51);">"https://collegetsaritsyno.mskobr.ru/uchashimsya/raspisanie-kanikuly"</span>)
+    bs = BS(resp.text, <span class="hljs-string" style="color: rgb(255, 204, 51);">"html.parser"</span>)
+    cl = bs.find(<span class="hljs-string" style="color: rgb(255, 204, 51);">"div"</span>, class_ = <span class="hljs-string" style="color: rgb(255, 204, 51);">"folders"</span>)
+    cl1 = cl.find_all(<span class="hljs-string" style="color: rgb(255, 204, 51);">"li"</span>, class_ = <span class="hljs-string" style="color: rgb(255, 204, 51);">"pdf"</span>)
+    <span class="hljs-keyword" style="color: rgb(102, 68, 170);">for</span> i <span class="hljs-keyword" style="color: rgb(102, 68, 170);">in</span> cl1:
+        <span class="hljs-keyword" style="color: rgb(102, 68, 170);">if</span> <span class="hljs-string" style="color: rgb(255, 204, 51);">"Расписание учебных занятий 1 курс с"</span> <span class="hljs-keyword" style="color: rgb(102, 68, 170);">in</span> i.text:
+            pdf_url = <span class="hljs-string" style="color: rgb(255, 204, 51);">"https://collegetsaritsyno.mskobr.ru"</span> + i.a[<span class="hljs-string" style="color: rgb(255, 204, 51);">'href'</span>]
+             <span class="hljs-comment" style="color: rgb(68, 68, 68);"># Определяем функцию отправки текстовых сообщений в чат Telegram</span>
+        <span class="hljs-keyword" style="color: rgb(102, 68, 170);">async</span> <span class="hljs-function"><span class="hljs-keyword" style="color: rgb(102, 68, 170);">def</span> <span class="hljs-title" style="color: rgb(187, 17, 102);">send_text</span><span class="hljs-params">(chat_id: int, message_text: str)</span>:</span>
+            <span class="hljs-keyword" style="color: rgb(102, 68, 170);">await</span> bot.send_message(chat_id=chat_id, text=message_text)
+        <span class="hljs-comment" style="color: rgb(68, 68, 68);"># Выполняем запрос GET по ссылке на PDF файл и записываем полученные данные в файл на диск</span>
+        response = requests.get(pdf_url)
+        filename = pdf_url.split(<span class="hljs-string" style="color: rgb(255, 204, 51);">'/'</span>)[<span class="hljs-number" style="color: rgb(0, 204, 102);">-1</span>]
+
+        <span class="hljs-keyword" style="color: rgb(102, 68, 170);">with</span> open(filename, <span class="hljs-string" style="color: rgb(255, 204, 51);">'wb'</span>) <span class="hljs-keyword" style="color: rgb(102, 68, 170);">as</span> f:
+            f.write(response.content)
+    <span class="hljs-keyword" style="color: rgb(102, 68, 170);">else</span>:
+        <span class="hljs-keyword" style="color: rgb(102, 68, 170);">continue</span>   </pre>
 		<p>Затем определяются обработчики команд "/command1", "/command2" и "/command3". "/command1" отправляет URL-адрес файла расписания в ответ на запрос пользователя. "/command2" отправляет сам файл в ответ на запрос пользователя, а затем удаляет его с диска. "/command3" отправляет сообщение с ссылкой на чат на Telegram.</p>
-		<img src="https://ray.so/#code=ICMg0J7Qv9GA0LXQtNC10LvRj9C10Lwg0L7QsdGA0LDQsdC-0YLRh9C40Log0LrQvtC80LDQvdC00YsgY29tbWFuZDEg0LTQu9GPINC-0YLQv9GA0LDQstC60Lgg0L7QtNC90L7Qs9C-INC60L7QvdC60YDQtdGC0L3QvtCz0L4g0YTQsNC50LvQsAogICAgICAgIGFzeW5jIGRlZiBzZW5kX3RleHQoY2hhdF9pZDogaW50LCBtZXNzYWdlX3RleHQ6IHN0cik6CiAgICAgICAgICAgIGF3YWl0IGJvdC5zZW5kX21lc3NhZ2UoY2hhdF9pZD1jaGF0X2lkLCB0ZXh0PW1lc3NhZ2VfdGV4dCkKICAgICAgICBAZHAubWVzc2FnZV9oYW5kbGVyKGNvbW1hbmRzPVsnY29tbWFuZDEnXSkKICAgICAgICBhc3luYyBkZWYgc2VuZF9tZXNzYWdlX2hhbmRsZXIobWVzc2FnZTogdHlwZXMuTWVzc2FnZSk6CiAgICAgICAgICAgIGNoYXRfaWQgPSBtZXNzYWdlLmNoYXQuaWQKICAgICAgICAgICAgbWVzc2FnZV90ZXh0ID0gcGRmX3VybAogICAgICAgICAgICBhd2FpdCBzZW5kX3RleHQoY2hhdF9pZCwgbWVzc2FnZV90ZXh0KQoKICAgICAgICAjINCe0L_RgNC10LTQtdC70Y_QtdC8INC-0LHRgNCw0LHQvtGC0YfQuNC6INC60L7QvNCw0L3QtNGLIGNvbW1hbmQyINC00LvRjyDQvtGC0L_RgNCw0LLQutC4IFBERiDRhNCw0LnQu9CwINCyINGH0LDRgiBUZWxlZ3JhbQogICAgICAgIEBkcC5tZXNzYWdlX2hhbmRsZXIoY29tbWFuZHM9Wydjb21tYW5kMiddKQogICAgICAgIGFzeW5jIGRlZiBzZW5kX3BkZihtZXNzYWdlOiBNZXNzYWdlKToKICAgICAgICAgICAgIyDQodC-0LfQtNCw0LXQvCDQvtCx0YrQtdC60YIgTWVkaWFHcm91cCDQtNC70Y8g0L7RgtC_0YDQsNCy0LrQuCDRhNCw0LnQu9CwINC60LDQuiDQtNC-0LrRg9C80LXQvdGC0LAKICAgICAgICAgICAgbWVkaWEgPSBNZWRpYUdyb3VwKCkKICAgICAgICAgICAgbWVkaWEuYXR0YWNoKElucHV0TWVkaWFEb2N1bWVudChvcGVuKGZpbGVuYW1lLCAncmInKSkpCiAgICAgICAgICAgIGF3YWl0IG1lc3NhZ2UucmVwbHlfbWVkaWFfZ3JvdXAobWVkaWE9bWVkaWEpCgogICAgICAgICMg0J7Qv9GA0LXQtNC10LvRj9C10Lwg0L7QsdGA0LDQsdC-0YLRh9C40Log0LrQvtC80LDQvdC00YsgY29tbWFuZDMg0LTQu9GPINC-0YLQv9GA0LDQstC60Lgg0YHRgdGL0LvQutC4INC90LAg0LrQsNC90LDQuyDQsiBUZWxlZ3JhbQogICAgICAgIEBkcC5tZXNzYWdlX2hhbmRsZXIoY29tbWFuZHM9Wydjb21tYW5kMyddKQogICAgICAgIGFzeW5jIGRlZiBlY2hvKG1lc3NhZ2U6IHR5cGVzLk1lc3NhZ2UpOgogICAgICAgICAgICBhd2FpdCBtZXNzYWdlLmFuc3dlcigiaHR0cHM6Ly90Lm1lL0hlbGxvQ29kZVdPUkxEIikgICAgIA&theme=midnight&background=true&darkMode=true&language=python&width=908&title=python-parser&padding=32" width="800" height="540" style="margin-left: 20px;">
+		<pre class="hljs" style="display: block; overflow-x: auto; padding: 0.5em; background: rgb(34, 34, 34); color: rgb(170, 170, 170);"><span class="hljs-comment" style="color: rgb(68, 68, 68);"># Определяем обработчик команды command1 для отправки одного конкретного файла</span>
+        <span class="hljs-keyword" style="color: rgb(102, 68, 170);">async</span> <span class="hljs-function"><span class="hljs-keyword" style="color: rgb(102, 68, 170);">def</span> <span class="hljs-title" style="color: rgb(187, 17, 102);">send_text</span><span class="hljs-params">(chat_id: int, message_text: str)</span>:</span>
+            <span class="hljs-keyword" style="color: rgb(102, 68, 170);">await</span> bot.send_message(chat_id=chat_id, text=message_text)
+<span class="hljs-meta" style="color: rgb(68, 68, 68);">        @dp.message_handler(commands=['command1'])</span>
+        <span class="hljs-keyword" style="color: rgb(102, 68, 170);">async</span> <span class="hljs-function"><span class="hljs-keyword" style="color: rgb(102, 68, 170);">def</span> <span class="hljs-title" style="color: rgb(187, 17, 102);">send_message_handler</span><span class="hljs-params">(message: types.Message)</span>:</span>
+            chat_id = message.chat.id
+            message_text = pdf_url
+            <span class="hljs-keyword" style="color: rgb(102, 68, 170);">await</span> send_text(chat_id, message_text)
+
+        <span class="hljs-comment" style="color: rgb(68, 68, 68);"># Определяем обработчик команды command2 для отправки PDF файла в чат Telegram</span>
+<span class="hljs-meta" style="color: rgb(68, 68, 68);">        @dp.message_handler(commands=['command2'])</span>
+        <span class="hljs-keyword" style="color: rgb(102, 68, 170);">async</span> <span class="hljs-function"><span class="hljs-keyword" style="color: rgb(102, 68, 170);">def</span> <span class="hljs-title" style="color: rgb(187, 17, 102);">send_pdf</span><span class="hljs-params">(message: Message)</span>:</span>
+            <span class="hljs-comment" style="color: rgb(68, 68, 68);"># Создаем объект MediaGroup для отправки файла как документа</span>
+            media = MediaGroup()
+            media.attach(InputMediaDocument(open(filename, <span class="hljs-string" style="color: rgb(255, 204, 51);">'rb'</span>)))
+            <span class="hljs-keyword" style="color: rgb(102, 68, 170);">await</span> message.reply_media_group(media=media)
+
+        <span class="hljs-comment" style="color: rgb(68, 68, 68);"># Определяем обработчик команды command3 для отправки ссылки на канал в Telegram</span>
+<span class="hljs-meta" style="color: rgb(68, 68, 68);">        @dp.message_handler(commands=['command3'])</span>
+        <span class="hljs-keyword" style="color: rgb(102, 68, 170);">async</span> <span class="hljs-function"><span class="hljs-keyword" style="color: rgb(102, 68, 170);">def</span> <span class="hljs-title" style="color: rgb(187, 17, 102);">echo</span><span class="hljs-params">(message: types.Message)</span>:</span>
+            <span class="hljs-keyword" style="color: rgb(102, 68, 170);">await</span> message.answer(<span class="hljs-string" style="color: rgb(255, 204, 51);">"https://t.me/HelloCodeWORLD"</span>)     </pre>
 <p>Далее определяется основное тело кода с функцией "executor.start_polling()". Эта функция запускает бота, который начинает слушать сообщения от пользователей и отправлять ответы в соответствии с определенными командами.</p>
-		<img src="https://ray.so/#code=IyDQktGL0LfQvtCyINCz0LvQsNCy0L3QvtC5INGE0YPQvdC60YbQuNC4CnNlbmRfRmlyc3RfQ291cnNlKCkKIyDQl9Cw0L_Rg9GB0Log0L_RgNC-0LXQutGC0LAKaWYgX19uYW1lX18gPT0gIl9fbWFpbl9fIjoKICAgIGV4ZWN1dG9yLnN0YXJ0X3BvbGxpbmcoZHAsc2tpcF91cGRhdGVzID0gVHJ1ZSkgICA&theme=midnight&background=true&darkMode=true&language=python&width=908&title=python-parser&padding=32" width="580" height="110" style="margin-left: 20px;">
+		<pre class="hljs" style="display: block; overflow-x: auto; padding: 0.5em; background: rgb(34, 34, 34); color: rgb(170, 170, 170);"><span class="hljs-meta" style="color: rgb(68, 68, 68);"># Вызов главной функции</span>
+send_First_Course()
+<span class="hljs-meta" style="color: rgb(68, 68, 68);"># Запуск проекта</span>
+<span class="hljs-keyword" style="color: rgb(102, 68, 170);">if</span> __name__ == <span class="hljs-string" style="color: rgb(255, 204, 51);">"__main__"</span>:
+    executor.start_polling(dp,skip_updates = True)    </pre>
 <p>Ну чтож на этом все. Надеюсь вы смогли подчеркнуть, что то полезное для себя!</p>
       </article>
       <!-- Дополнительный контент также может быть вложен в основной контент -->
